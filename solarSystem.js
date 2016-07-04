@@ -51,7 +51,7 @@ var validPairs = [{
     me.output = {};
 
     /* TODO: add array with objects that mush be add()'ed to scenes */
-    var Renderer, Scene, Camera, SceneBackground, GlobalLight;
+    var Renderer, Scene, Camera, SceneBackground, GlobalLight, Controls;
 
     var levelBox, Sun, planets = [],
         updatables = [];
@@ -107,6 +107,8 @@ var validPairs = [{
         Renderer.domElement.addEventListener('ready', me.update);
 
         updatables.push(me.stats);
+
+        Controls = new THREE.OrbitControls(Camera, Renderer.domElement);
     };
     
     me.initGeometry = function() {
@@ -114,8 +116,8 @@ var validPairs = [{
 
         Sun = new Star( 0xffd305, 128, 35000, Camera );
 
-        /* TODO: remove this */
         updatables.push(Sun);
+        /* TODO: remove this */
         updatables.push(Sun.starGlow);
 
         var counter = 0, planetConfig, planet;
@@ -301,7 +303,8 @@ function Star( color, size, mass, cameraObject, starConfig ) {
 
     this.starGlow.position = this.mesh.position;
 
-    //this.mesh.add(this.starGlow); TODO: glow must be child of star object, fix rotation
+    // TODO: glow must be child of star object, fix rotation
+    //this.mesh.add(this.starGlow);
     this.starGlow.update = function() {
         this.lookAt(cameraObject.position);
     };
@@ -329,7 +332,7 @@ function Planet( config, starObject ) {
     
     this.mesh = new THREE.Mesh( planetGeometry, planetMaterial );
     
-    this.mass = 1.0;
+    this.mass = 2.5;
 
     this.acceleration = new THREE.Vector3( 0.0, 0.0, 0.0 );
 
@@ -352,9 +355,7 @@ function Planet( config, starObject ) {
         var dy = starObject.mesh.position.y - this.mesh.position.y;
         var dz = starObject.mesh.position.z - this.mesh.position.z;
 
-        var factor = this.mass * 0.3;
-
-        var divisor = distanceCubed * factor;
+        var divisor = distanceCubed * this.mass;
 
         this.acceleration.x = starObject.mass * dx / divisor;
         this.acceleration.y = starObject.mass * dy / divisor;

@@ -8,41 +8,78 @@ var SolarSystem = {},
         nearClip: 100,
         farClip: 1000000,
         renderQuality: 100,
-        planetsAmount: 10
+        planetsAmount: 9
     };
 
-/* TODO: implement valid position/velocity generator */
-var validPairs = [{
-    "vel" : {"x" : 2.7125417986013174, "y" : -2.6572494209073865, "z" : -0.8195179254582308},
-    "pos" : {"x" : 912.5999423338039, "y" : 755.5656460045411, "z" : -37.65876605958258}
+var planetsConfig = [{
+    "vel" : {"x" : 0.1125417986013174, "y" : 4.772494209073865, "z" : -0.1195179254582308},
+    "pos" : {"x" : -460.5999423338039, "y" : 0.5656460045411, "z" : -0.65876605958258},
+    "surfaceColor" : {"hex" : 0x7C5F3F},
+    "specularColor" : {"hex" : 0x7C5F3F},
+    "size" : 20,
+    "name" : "mercury"
 }, {
-    "vel" : {"x" : 2.059217780973765, "y" : -2.0482506158704794, "z" : 0.36779303898046745},
-    "pos" : {"x" : 988.6788367763866, "y" : 981.9931297993488, "z" : 3.6747193027849363}
+    "vel" : {"x" : 0.059217780973765, "y" : 3.5482506158704794, "z" : 0.36779303898046745},
+    "pos" : {"x" : -1070.6788367763866, "y" : 0.9931297993488, "z" : 0.6747193027849363},
+    "surfaceColor" : {"hex" : 0x773075},
+    "specularColor" : {"hex" : 0x773075},
+    "size" : 75,
+    "name" : "venus"
 }, {
-    "vel" : {"x" : 2.0341470462264386, "y" : -1.9141539267271603, "z" : -0.4694012565212047},
-    "pos" : {"x" : 773.8166298392939, "y" : 711.9612793877226, "z" : -72.66610736839868}
+    "vel" : {"x" : 0.0341470462264386, "y" : 2.9141539267271603, "z" : -0.4694012565212047},
+    "pos" : {"x" : -1470.8166298392939, "y" : 0.9612793877226, "z" : -0.66610736839868},
+    "surfaceColor" : {"hex" : 0xffffff},
+    "specularColor" : {"hex" : 0xffffff},
+    "size" : 90,
+    "name" : "earth"
 }, {
-    "vel" : {"x" : -2.7608423813967704, "y" : 3.0930361400999384, "z" : 0.9545451196799953},
-    "pos" : {"x" : 661.953007891752, "y" : 574.0549086959136, "z" : -12.482350549837392}
+    "vel" : {"x" : -0.0608423813967704, "y" : 2.4930361400999384, "z" : 0.1545451196799953},
+    "pos" : {"x" : -2075.953007891752, "y" : 0.0549086959136, "z" : -0.482350549837392},
+    "surfaceColor" : {"hex" : 0x653300},
+    "specularColor" : {"hex" : 0x653300},
+    "size" : 60,
+    "name" : "mars"
 }, {
-    "vel" : {"x" : 2.394527755208163, "y" : -2.7431631613463354, "z" : -0.716587864976954},
-    "pos" : {"x" : 923.5741156065409, "y" : 682.0700979072618, "z" : -82.06618754773567}
+    "vel" : {"x" : 0.024527755208163, "y" : 1.7431631613463354, "z" : -0.006587864976954},
+    "pos" : {"x" : -3420.5741156065409, "y" : 0.0700979072618, "z" : -0.06618754773567},
+    "surfaceColor" : {"hex" : 0xDAB172},
+    "specularColor" : {"hex" : 0xDAB172},
+    "size" : 210,
+    "name" : "jupiter"
 }, {
-    "vel" : {"x" : -2.7125417986013174, "y" : 2.6572494209073865, "z" : 0.8195179254582308},
-    "pos" : {"x" : -912.5999423338039, "y" : -755.5656460045411, "z" : 37.65876605958258}
+    "vel" : {"x" : 0.0025417986013174, "y" : 1.7572494209073865, "z" : 0.0195179254582308},
+    "pos" : {"x" : -4830.5999423338039, "y" : -0.5656460045411, "z" : 0.65876605958258},
+    "surfaceColor" : {"hex" : 0xFDB747},
+    "specularColor" : {"hex" : 0xFDB747},
+    "size" : 185,
+    "name" : "saturn"
 }, {
-    "vel" : {"x" : -2.059217780973765, "y" : 2.0482506158704794, "z" : -0.36779303898046745},
-    "pos" : {"x" : -988.6788367763866, "y" : -981.9931297993488, "z" : -3.6747193027849363}
+    "vel" : {"x" : 0.019217780973765, "y" : 1.4882506158704794, "z" : -0.15779303898046745},
+    "pos" : {"x" : -6325.6788367763866, "y" : -0.9931297993488, "z" : -0.6747193027849363},
+    "surfaceColor" : {"hex" : 0xBCDDE4},
+    "specularColor" : {"hex" : 0xBCDDE4},
+    "size" : 165,
+    "name" : "uranus"
 }, {
-    "vel" : {"x" : -2.0341470462264386, "y" : 1.9141539267271603, "z" : 0.4694012565212047},
-    "pos" : {"x" : -773.8166298392939, "y" : -711.9612793877226, "z" : 72.66610736839868}
+    "vel" : {"x" : 0.0141470462264386, "y" : 1.1941539267271603, "z" : 0.1394012565212047},
+    "pos" : {"x" : -8292.8166298392939, "y" : -0.9612793877226, "z" : 0.66610736839868},
+    "surfaceColor" : {"hex" : 0x8792D2},
+    "specularColor" : {"hex" : 0x8792D2},
+    "size" : 195,
+    "name" : "neptune"
 }, {
-    "vel" : {"x" : 2.7608423813967704, "y" : -3.0930361400999384, "z" : -0.9545451196799953},
-    "pos" : {"x" : -661.953007891752, "y" : -574.0549086959136, "z" : 12.482350549837392}
-}, {
-    "vel" : {"x" : -2.394527755208163, "y" : 2.7431631613463354, "z" : 0.716587864976954},
-    "pos" : {"x" : -923.5741156065409, "y" : -682.0700979072618, "z" : 82.06618754773567}
-}];
+    "vel" : {"x" : 0.0018423813967704, "y" : 1.0670361400999384, "z" : -0.0545451196799953},
+    "pos" : {"x" : -9352.953007891752, "y" : -0.0549086959136, "z" : 0.482350549837392},
+    "surfaceColor" : {"hex" : 0xC7B4A6},
+    "specularColor" : {"hex" : 0xC7B4A6},
+    "size" : 15,
+    "name" : "pluto"
+}/*, {
+    "vel" : {"x" : -0.024527755208163, "y" : 0.4481631613463354, "z" : 0.716587864976954},
+    "pos" : {"x" : -10660.5741156065409, "y" : -0.0700979072618, "z" : 0.06618754773567},
+    "surfaceColor" : {"r" : 124, "g" : 95, "b" : 63},
+    "size": 20
+}*/];
 
 (function(SolarSystem, config) {
     var me = SolarSystem || {};
@@ -51,7 +88,7 @@ var validPairs = [{
     me.output = {};
 
     /* TODO: add array with objects that mush be add()'ed to scenes */
-    var Renderer, Scene, Camera, SceneBackground, GlobalLight;
+    var Renderer, Scene, Camera, SceneBackground, GlobalLight, Controls;
 
     var levelBox, Sun, planets = [],
         updatables = [];
@@ -94,7 +131,7 @@ var validPairs = [{
             me.config.nearClip,
             me.config.farClip
         );
-        Camera.position.set(0.0, 0.0, 3000.0);
+        Camera.position.set(0.0, 0.0, 14000.0);
 
         document.body.appendChild(Renderer.domElement);
 
@@ -107,6 +144,8 @@ var validPairs = [{
         Renderer.domElement.addEventListener('ready', me.update);
 
         updatables.push(me.stats);
+
+        Controls = new THREE.OrbitControls(Camera, Renderer.domElement);
     };
     
     me.initGeometry = function() {
@@ -114,29 +153,30 @@ var validPairs = [{
 
         Sun = new Star( 0xffd305, 128, 35000, Camera );
 
-        /* TODO: remove this */
         updatables.push(Sun);
-        updatables.push(Sun.starGlow);
 
         var counter = 0, planetConfig, planet;
         while (counter < me.config.planetsAmount)
         {
             planetConfig =
             {
-                size: Math.floor(Math.random() * (60 - 20) + 20),
                 v3pos: new THREE.Vector3(
-                    validPairs[counter].pos.x,
-                    validPairs[counter].pos.y,
-                    validPairs[counter].pos.z
+                    planetsConfig[counter].pos.x,
+                    planetsConfig[counter].pos.y,
+                    planetsConfig[counter].pos.z
                 ),
                 v3vel: new THREE.Vector3(
-                    validPairs[counter].vel.x,
-                    validPairs[counter].vel.y,
-                    validPairs[counter].vel.z
-                )
+                    planetsConfig[counter].vel.x,
+                    planetsConfig[counter].vel.y,
+                    planetsConfig[counter].vel.z
+                ),
+                surfaceColor: planetsConfig[counter].surfaceColor,
+                specularColor: planetsConfig[counter].specularColor,
+                size: planetsConfig[counter].size,
+                name: planetsConfig[counter].name
             };
 
-            planet = new Planet( planetConfig, Sun );
+            planet = new Planet( planetConfig, Sun, Camera );
             planets.push(planet);
             updatables.push(planet);
 
@@ -157,10 +197,11 @@ var validPairs = [{
     me.composeScene = function() {
         SceneBackground.add(levelBox.mesh);
 
-        Scene.add(Sun.mesh);
         Scene.add(Sun.starGlow);
+        Scene.add(Sun.mesh);
 
         for (var i = 0; i < planets.length; i++) {
+            Scene.add(planets[i].planetGlow);
             Scene.add(planets[i].mesh);
         }
 
@@ -239,9 +280,9 @@ function Star( color, size, mass, cameraObject, starConfig ) {
 
     var starLightConfig =
     {
-        color: color || 0xffd305,
-        intensity: config.intensity || 3,
-        distance: config.distance || 3500,
+        color: 0xffffff,
+        intensity: config.intensity || 1.8,
+        distance: config.distance || 20000,
         attenuation: config.attenuation || 2
     };
 
@@ -283,7 +324,7 @@ function Star( color, size, mass, cameraObject, starConfig ) {
             viewVector:
             {
                 type: "v3",
-                value: cameraObject.position
+                value: cameraObject.position.clone()
             }
         },
         vertexShader: document.getElementById('glowVertexShader').textContent,
@@ -301,10 +342,8 @@ function Star( color, size, mass, cameraObject, starConfig ) {
 
     this.starGlow.position = this.mesh.position;
 
-    //this.mesh.add(this.starGlow); TODO: glow must be child of star object, fix rotation
-    this.starGlow.update = function() {
-        this.lookAt(cameraObject.position);
-    };
+    // TODO: glow must be child of star object, fix rotation
+    //this.mesh.add(this.starGlow);
 
     this.update = function() {
         var frameNumber = SolarSystem.stats.framesCounter;
@@ -313,23 +352,28 @@ function Star( color, size, mass, cameraObject, starConfig ) {
         this.mesh.rotation.y = frameNumber * 0.001;
         this.mesh.rotation.z = frameNumber * 0.001;
 
+        this.starGlow.lookAt(cameraObject.position);
         //this.starGlow.lookAt(this.starGlow.worldToLocal(cameraObject.position.clone()));
     };
 
 }
 
-function Planet( config, starObject ) {
+function Planet( config, starObject, cameraObject ) {
+    var planetTexture = new THREE.TextureLoader().load('resources/textures/' + config.name + '.jpg');
+
     var planetGeometry = new THREE.SphereGeometry( config.size || 20, config.size / 2 || 10, config.size / 2 || 10);
 
     var planetMaterial = new THREE.MeshPhongMaterial(
     {
-        color: config.color || 0x3385ff,
-        specular: 15
+        color: config.surfaceColor.hex || 0x3385ff,
+        specular: 15,
+        shininess: 5,
+        map: planetTexture
     });
-    
+
     this.mesh = new THREE.Mesh( planetGeometry, planetMaterial );
-    
-    this.mass = 1.0;
+
+    this.mass = 2.5;
 
     this.acceleration = new THREE.Vector3( 0.0, 0.0, 0.0 );
 
@@ -338,6 +382,53 @@ function Planet( config, starObject ) {
     this.mesh.position.x = config.v3pos.x;
     this.mesh.position.y = config.v3pos.y;
     this.mesh.position.z = config.v3pos.z;
+
+    var planetGlowConfig =
+    {
+        const: 0.0,
+        power: 1.0,
+        glowColor: config.surfaceColor.hex
+    };
+
+    var planetGlowMaterial = new THREE.ShaderMaterial(
+        {
+            uniforms:
+            {
+                c:
+                {
+                    type: "f",
+                    value: planetGlowConfig.const
+                },
+                p:
+                {
+                    type: "f",
+                    value: planetGlowConfig.power
+                },
+                glowColor:
+                {
+                    type: "c",
+                    value: new THREE.Color(planetGlowConfig.glowColor)
+                },
+                viewVector:
+                {
+                    type: "v3",
+                    value: cameraObject.position.clone()
+                }
+            },
+            vertexShader: document.getElementById('glowVertexShader').textContent,
+            fragmentShader: document.getElementById('glowFragmentShader').textContent,
+            side: THREE.BackSide,
+            blending: THREE.AdditiveBlending,
+            transparent: true
+        });
+
+    var planetGlowGeometry = this.mesh.geometry.clone();
+
+    this.planetGlow = new THREE.Mesh( planetGlowGeometry, planetGlowMaterial );
+
+    this.planetGlow.scale.multiplyScalar(1.1);
+
+    this.planetGlow.position = this.mesh.position;
 
     /* TODO: implement parent wrapper-class for star, planets etc */
     this.distanceTo = function(object3d) {
@@ -352,9 +443,7 @@ function Planet( config, starObject ) {
         var dy = starObject.mesh.position.y - this.mesh.position.y;
         var dz = starObject.mesh.position.z - this.mesh.position.z;
 
-        var factor = this.mass * 0.3;
-
-        var divisor = distanceCubed * factor;
+        var divisor = distanceCubed * this.mass;
 
         this.acceleration.x = starObject.mass * dx / divisor;
         this.acceleration.y = starObject.mass * dy / divisor;
@@ -367,6 +456,12 @@ function Planet( config, starObject ) {
         this.mesh.position.x += this.velocity.x;
         this.mesh.position.y += this.velocity.y;
         this.mesh.position.z += this.velocity.z;
+
+        this.planetGlow.position.x = this.mesh.position.x;
+        this.planetGlow.position.y = this.mesh.position.y;
+        this.planetGlow.position.z = this.mesh.position.z;
+
+        this.planetGlow.lookAt(cameraObject.position);
     };
 
 }
@@ -376,7 +471,7 @@ function LevelBox( config ) {
 
     var material = new THREE.MeshBasicMaterial(
     {
-        color: 0x00004d,
+        color: 0x000010,
         side: THREE.BackSide
     });
 

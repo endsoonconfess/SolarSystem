@@ -11,6 +11,8 @@ var SolarSystem = {},
         planetsAmount: 9
     };
 
+/* TODO: change planets orbit to horizontal plane */
+/* TODO: add rotation around own axis for each planet */
 var planetsConfig = [{
     "vel" : {"x" : 0.1125417986013174, "y" : 4.772494209073865, "z" : -0.1195179254582308},
     "pos" : {"x" : -460.5999423338039, "y" : 0.5656460045411, "z" : -0.65876605958258},
@@ -436,6 +438,8 @@ function Planet( config, starObject, cameraObject ) {
     };
 
     this.update = function() {
+        var frameNumber = SolarSystem.stats.framesCounter;
+
         var distance = this.distanceTo(starObject);
         var distanceCubed = Math.pow(distance, 3);
 
@@ -456,6 +460,10 @@ function Planet( config, starObject, cameraObject ) {
         this.mesh.position.x += this.velocity.x;
         this.mesh.position.y += this.velocity.y;
         this.mesh.position.z += this.velocity.z;
+
+        this.mesh.rotation.x = frameNumber * 0.0005;
+        this.mesh.rotation.y = frameNumber * 0.0025;
+        this.mesh.rotation.z = frameNumber * 0.0005;
 
         this.planetGlow.position.x = this.mesh.position.x;
         this.planetGlow.position.y = this.mesh.position.y;

@@ -107,6 +107,14 @@ var planetsConfig = [{
     var currentFrame = 0,
         lastFrame = 0;
 
+    me.getSun = function() {
+        return Sun;
+    };
+
+    me.getCamera = function() {
+        return Camera;
+    };
+
     function init() {
         initWebGl();
 
@@ -279,7 +287,6 @@ var planetsConfig = [{
         me.output.cameraPos.innerText = Camera.position.distanceTo(Sun.mesh.position);
     };
 
-    /* TODO: Implement getters/setters for SolarSystem members */
     init();
 
 })(SolarSystem, config);
@@ -501,10 +508,11 @@ function Planet( config, starObject, cameraObject ) {
 function LevelBox( config ) {
     var geometry = new THREE.SphereGeometry( 50000, 50, 50 );
 
-    var material = new THREE.MeshBasicMaterial(
+    var material = new THREE.MeshPhongMaterial(
     {
         color: 0x000010,
-        side: THREE.BackSide
+        side: THREE.DoubleSide,
+        map: new THREE.TextureLoader().load('resources/textures/space.jpg')
     });
 
     this.mesh = new THREE.Mesh( geometry, material );
